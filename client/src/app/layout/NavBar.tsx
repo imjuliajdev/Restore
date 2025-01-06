@@ -1,6 +1,7 @@
 import { ShoppingCart } from "@mui/icons-material";
-import { AppBar, Badge, Box, IconButton, List, ListItem, Toolbar, Typography } from "@mui/material";
+import { AppBar, Badge, Box, IconButton, LinearProgress, List, ListItem, Toolbar, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { useAppSelector } from "../store/store";
 
 const navLinks = [
     {title: 'Home', path: '/'},
@@ -26,6 +27,7 @@ const navStyles = {
     },
 }
 export default function NavBar() {
+    const {isLoading} = useAppSelector(state => state.ui);  
     return (
         <AppBar position='fixed' sx={{backgroundColor: '#121212', mb: 4}}>
             <Toolbar sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -66,6 +68,11 @@ export default function NavBar() {
                 </Box>
 
             </Toolbar>
+            {isLoading && 
+                <Box sx={{width: '100%'}}>
+                    <LinearProgress color="secondary" />
+                </Box>
+            }
         </AppBar>
     )
 }

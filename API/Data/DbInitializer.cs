@@ -18,7 +18,7 @@ public class DbInitializer
     {
         context.Database.Migrate();
         
-        if(context.Products.Any()) return;
+        if(!context.Products.Any()) {
         
         var products = new List<Product>
         {
@@ -202,6 +202,100 @@ public class DbInitializer
                 },
         };
         context.Products.AddRange(products);
+        }
+
+        if(!context.Categories.Any()) 
+        {
+             var categories = new List<Category>
+        {
+            new(){
+                Name = "Wellness",
+                Slug = "wellness",
+                ShowOnNavbar = true
+            },
+            new(){
+                Name = "Mindfulness",
+                Slug = "mindfulness",
+                ShowOnNavbar = true
+            },
+            new(){
+                Name = "Research",
+                Slug = "research",
+                ShowOnNavbar = true
+            },
+        };
+            context.Categories.AddRange(categories);
+        }
+
+        if(!context.Blogs.Any()) {
+        var categories = context.Categories.ToList();
+        var blogs = new List<Blog>
+        {
+            new(){
+                Title = "Blog 1",
+                Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                Slug = "blog-1",
+                Image = "https://picsum.photos/800/450?random=1",
+                Excerpt = "This is the introduction of blog 1",
+                CreatedAt = DateTime.Now,
+                UserId = "1",
+                CategoryId = 1,
+                Category = categories[0]
+            },
+            new(){
+                Title = "Blog 2",
+                Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                Slug = "blog-2",
+                Image = "https://picsum.photos/800/450?random=2",
+                Excerpt = "This is the introduction of blog 2",
+                CreatedAt = DateTime.Now,
+                UserId = "1",
+                CategoryId = 2,
+                Category = categories[1]
+            },
+            new(){
+                Title = "Blog 3",
+                Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                Slug = "blog-3",
+                Image = "https://picsum.photos/800/450?random=3",
+                Excerpt = "This is the introduction of blog 3",
+                CreatedAt = DateTime.Now,
+                UserId = "1",
+                CategoryId = 3,
+                Category = categories[2]
+            }
+        };
+        context.Blogs.AddRange(blogs);
+        }
+        //comments
+        if(!context.Comments.Any())
+        {
+            var blogs = context.Blogs.ToList();
+        
+             var comments = new List<Comment>
+        {
+            new(){
+                Content = "This is a comment on blog 1",
+                CreatedAt = DateTime.Now,
+                BlogPostId = 1,
+                Blog = blogs[0]
+            },
+            new(){
+                Content = "This is a comment on blog 2",
+                CreatedAt = DateTime.Now,
+                BlogPostId = 2,
+                Blog = blogs[1]
+            },
+            new(){
+                Content = "This is a comment on blog 3",
+                CreatedAt = DateTime.Now,
+                BlogPostId = 3,
+                Blog = blogs[2]
+            }
+        };
+            context.Comments.AddRange(comments);
+        }
+
         context.SaveChanges();
     }
 }
