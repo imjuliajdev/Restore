@@ -8,5 +8,8 @@ export type Blog = {
     createdAt: Date;
     userId: string;
     categoryId: number;
+    category: {
+        name: string;
+    };
   }
   

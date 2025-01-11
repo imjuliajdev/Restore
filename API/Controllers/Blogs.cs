@@ -5,9 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class BlogsController(StoreContext context) : ControllerBase
+public class BlogsController(StoreContext context) : BaseApiController
 {
 
     [HttpGet]
