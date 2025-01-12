@@ -4,10 +4,12 @@ import {
     CardMedia, 
     CardContent, 
     Typography,
-    CardActions    
+    CardActions,    
 } from "@mui/material";
 import { Product } from "../../app/models/product";
 import { Link } from "react-router-dom";
+import { useAddCartItemMutation } from "../cart/cartApi";
+import { currencyFormat } from "../../lib/util";
 
 type Props = {
     product: Product;
@@ -16,6 +18,7 @@ type Props = {
 export default function ProductCard(
     {product}: Props
 ) {
+    const [addCartItem, {isLoading}] = useAddCartItemMutation();
   return (
    <Card 
         elevation={2}
@@ -42,13 +45,18 @@ export default function ProductCard(
                 <Typography 
                 variant='h6' 
                 sx={{color: 'secondary.main'}}>
-                    ${(product.price / 100).toFixed(2)}
+                    {currencyFormat(product.price)}
                 </Typography>
          </CardContent>
          <CardActions
             sx={{justifyContent: 'space-between'}}
          >
-            <Button>Add to cart</Button>
+            <Button 
+            onClick={() => addCartItem({product, quantity: 1})}
+            disabled={isLoading}
+            >
+                Add to cart
+            </Button>
             <Button component={Link} to={`/catalog/${product.id}`}>View</Button>
          </CardActions>
    </Card>
