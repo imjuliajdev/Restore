@@ -5,14 +5,25 @@ import { uiSlice } from '../layout/uiSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { errorApi } from '../../features/about/errorApi';
+import { cartApi } from '../../features/cart/cartApi';
+import { blogApi } from '../../features/blog/blogApi';
+import { catalogSlice } from '../../features/catalog/catalogSlice';
 
 export const store = configureStore({
     reducer: {
         [catalogApi.reducerPath]: catalogApi.reducer,
         [errorApi.reducerPath]: errorApi.reducer,
+        [cartApi.reducerPath]: cartApi.reducer,
+        [blogApi.reducerPath]: blogApi.reducer,
         ui: uiSlice.reducer,
+        catalog: catalogSlice.reducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(catalogApi.middleware,errorApi.middleware),
+    middleware: (getDefaultMiddleware) => 
+        getDefaultMiddleware().concat(
+            catalogApi.middleware,
+            errorApi.middleware,
+            cartApi.middleware,
+            blogApi.middleware),
 
 });
 

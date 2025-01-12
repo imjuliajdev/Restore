@@ -11,7 +11,7 @@ export default function CartPage() {
     if(!cart || cart.items.length === 0) return <Typography variant="h3">Your cart is empty</Typography>
 
     return (
-       <Grid2 container spacing={2}>
+       <Grid2 container spacing={5}>
         <Grid2 size={8}>
             {cart.items.map((item) => (
                 <CartItem item={item} key={item.productId}/>

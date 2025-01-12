@@ -1,6 +1,6 @@
 import { Product } from "../../app/models/product";
 import ProductCard from "./ProductCard";
-import { Box } from "@mui/material";
+import { Grid2 } from "@mui/material";
 
 type Props = {
     products: Product[];
@@ -8,11 +8,13 @@ type Props = {
 
 export default function ProductList({products}: Props) {
   return (
-    <Box 
+    <Grid2
         sx={{display: 'flex', flexWrap: 'wrap',gap: 3, justifyContent: 'center'}}>
         {products.map((product) => (
-            <ProductCard key = {product.id} product={product}/>
+            <Grid2 size={3} display='flex' key = {product.id}>
+                <ProductCard product={product}/>
+            </Grid2>
         ))}
-    </Box>
+    </Grid2>
   )
 }
