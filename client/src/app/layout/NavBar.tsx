@@ -3,6 +3,8 @@ import { AppBar, Badge, Box, IconButton, LinearProgress, List, ListItem, Toolbar
 import { Link, NavLink } from "react-router-dom";
 import { useAppSelector } from "../store/store";
 import { useFetchCartQuery } from "../../features/cart/cartApi";
+import UserMenu from "./UserMenu";
+import { useUserInfoQuery } from "../../features/account/accountApi";
 
 const navLinks = [
     {title: 'Home', path: '/'},
@@ -28,6 +30,7 @@ const navStyles = {
     },
 }
 export default function NavBar() {
+    const {data: user} = useUserInfoQuery();
     const {isLoading} = useAppSelector(state => state.ui); 
     const {data: cart} = useFetchCartQuery();
 
@@ -62,6 +65,8 @@ export default function NavBar() {
                             <ShoppingCart />
                         </Badge>
                     </IconButton>
+
+                    {user ? (<UserMenu user={user} /> ): (
                     
                     <List sx={{display:'flex'}}>
                             {authLinks.map(({title, path}) => (
@@ -75,6 +80,7 @@ export default function NavBar() {
                                     </ListItem>
                                 ))}
                         </List>
+                    )}
                 </Box>
 
             </Toolbar>
